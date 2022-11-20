@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    restart: always
+    environment:
+      COMPOSE_CONVERT_WINDOWS_PATHS: 1
+    env_file: .env
+
+  db:
+    container_name: rust-crud-sql-db
+    image: postgres:12
+    user: 'root'
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo
+    restart: always
+    expose:
+      - 5432
+
+volumes:
+  postgres_data:
