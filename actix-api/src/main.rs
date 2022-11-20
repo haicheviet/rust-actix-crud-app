@@ -1,14 +1,13 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder, Error};
+use actix_web::{get, post, web, App, Error, HttpResponse, HttpServer, Responder};
+use std::env;
 
+pub mod action;
 pub mod models;
 pub mod schema;
-pub mod action;
-
 
 pub mod db;
 
-
-use self::action::{get_post, create_post};
+use self::action::{create_post, get_post};
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -45,12 +44,15 @@ async fn count_post(pool: web::Data<db::DbPool>) -> Result<HttpResponse, Error> 
     .map_err(actix_web::error::ErrorInternalServerError)?;
 
     println!("Displaying {} posts", results.len());
-    let temp =  results.len();
+    let temp = "";
     Ok(HttpResponse::Ok().body(temp))
 }
 
 #[post("/add-post")]
-async fn add_post(pool: web::Data<db::DbPool>, form: web::Json<models::NewPostPayload>) -> Result<HttpResponse, Error> {
+async fn add_post(
+    pool: web::Data<db::DbPool>,
+    form: web::Json<models::NewPostPayload>,
+) -> Result<HttpResponse, Error> {
     // use web::block to offload blocking Diesel code without blocking server thread
     let results = web::block(move || {
         let mut conn = pool.get()?;
@@ -64,6 +66,7 @@ async fn add_post(pool: web::Data<db::DbPool>, form: web::Json<models::NewPostPa
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let actix_port = env::var("ACTIX_PORT").unwrap();
     HttpServer::new(|| {
         let pool = db::get_connection_pool();
 
@@ -71,11 +74,11 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(pool.clone()))
             .service(hello)
             .service(echo)
-            .service(show_post)
+            .service(count_post)
             .service(add_post)
             .route("/hey", web::get().to(manual_hello))
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("0.0.0.0", actix_port.parse::<u16>().unwrap()))?
     .run()
     .await
 }

@@ -2,21 +2,19 @@ version: "3.8"
 
 services:
   app:
-    container_name: app
+    image: actix-api:runtime
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - 8000:8000
     depends_on:
       - db
-    restart: always
-    environment:
-      COMPOSE_CONVERT_WINDOWS_PATHS: 1
     env_file: .env
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
 
   db:
-    container_name: rust-crud-sql-db
     image: postgres:12
     user: 'root'
     ports:
