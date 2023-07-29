@@ -24,14 +24,6 @@ async fn manual_hello() -> impl Responder {
     HttpResponse::Ok().body("Hey there!")
 }
 
-// fn get_post(db: &mut PgConnection) {
-//     posts
-//         .filter(published.eq(true))
-//         .limit(5)
-//         .load::<Post>(db)
-//         .expect("Error loading posts");
-
-// }
 
 #[get("/count-post")]
 async fn count_post(pool: web::Data<db::DbPool>) -> Result<HttpResponse, Error> {
