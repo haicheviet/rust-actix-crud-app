@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is an experimental CRUD (Create, Read, Update, Delete) API written in Rust. The purpose of this project is to explore building a simple CRUD application in Rust, using the popular [Actix web framework](https://github.com/actix/actix-web) and [Diesel ORM](https://github.com/diesel-rs/diesel).
+This project is an experimental CRUD (Create, Read, Update, Delete) API written in Rust. The purpose of this project is to explore building a simple New Post CRUD application in Rust, using the popular [Actix web framework](https://github.com/actix/actix-web) and [Diesel ORM](https://github.com/diesel-rs/diesel).
 Mostly for learning purpose
 
 ## Requirements
