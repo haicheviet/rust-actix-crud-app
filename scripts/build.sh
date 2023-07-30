@@ -6,20 +6,20 @@ set -e
 # Build the planner stage:
 docker build --file Dockerfile \
        --target planner \
-       --tag $DOCKER_IMAGE_APP:planner  .
+       --tag actix-api:planner  .
 
 
 # Build the compile stage, using cached planner stage:
 docker build --file Dockerfile \
        --target builder \
-       --cache-from $DOCKER_IMAGE_APP:planner \
-       --cache-from $DOCKER_IMAGE_APP:builder \
-       --tag $DOCKER_IMAGE_APP:builder  .
+       --cache-from actix-api:planner \
+       --cache-from actix-api:builder \
+       --tag actix-api:builder  .
 
 # Build the runtime stage, using cached compile stage:
 docker build --file Dockerfile \
        --target runtime \
-       --cache-from $DOCKER_IMAGE_APP:runtime \
-       --cache-from $DOCKER_IMAGE_APP:builder \
-       --tag $DOCKER_IMAGE_APP:runtime  .
+       --cache-from actix-api:runtime \
+       --cache-from actix-api:builder \
+       --tag actix-api:runtime  .
 
