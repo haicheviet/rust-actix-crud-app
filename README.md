@@ -18,7 +18,7 @@ To run this project, you will need the docker and docker compose:
 docker compose up -d
 ```
 
-Open http://localhost:8080 (or {docker ip}:8080 on windows) to view it in the browser.
+Open http://localhost:8000 (or {docker ip}:8000 on windows) to view it in the browser.
 
 
 ## API Endpoints
