@@ -23,36 +23,35 @@ Open http://localhost:8000 (or {docker ip}:8000 on windows) to view it in the br
 
 ## API Endpoints
 
-The API provides endpoints for basic CRUD operations on a sample entity called Item. Each item has an id, name, and description.
+The API provides endpoints for basic CRUD operations on a sample entity called Post. Each item has an id, title, body and published.
 
 ### Create an Item
 
 ```
-Endpoint: POST /items
-Request Body: JSON object with name and description fields.
+Endpoint: POST /post
+Request Body: JSON object with title, body and optional published fields.
 ```
 
-### Get All Items
+### Count all public Post
 
 ```
-Endpoint: GET /items
+Endpoint: GET /count-post
 ```
 
-### Get an Item by ID
+### Get a post by ID
 
 ```
-Endpoint: GET /items/:id
+Endpoint: GET /post/:id
 ```
 
-### Update an Item
+### Publish a post
 
 ```
-Endpoint: PUT /items/:id
-Request Body: JSON object with name and description fields.
+Endpoint: PATCH /post/:id
 ```
 
-### Delete an Item
+### Delete a post
 
 ```
-Endpoint: DELETE /items/:id
+Endpoint: DELETE /post/:id
 ```
